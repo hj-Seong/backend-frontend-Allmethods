@@ -24,6 +24,14 @@ const routes = [
       return import("../views/PageView.vue");
     },
   },
+
+  {
+    // 수정페이지 추가
+    path: "/updateform/:id",
+    component: function () {
+      return import("../views/UpdateForm.vue");
+    },
+  },
 ];
 
 const router = new VueRouter({

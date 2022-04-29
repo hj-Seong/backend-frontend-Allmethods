@@ -13,6 +13,11 @@
                 <td>{{memo.writer}}</td>
                 <!-- 타이틀을 눌렀을때 /list/:id 링크로 이동 -->
                 <td @click="$router.push(`/list/${memo.id}`)">{{memo.title}}</td>
+                <!-- 수정 버튼을 눌렀을때, UpdateForm 이동(화면출력)-->
+                <td><button @click="$router.push(`/updateform/${memo.id}`)">수정</button></td>
+                <!-- 삭제 버튼을 눌렀을때, 삭제할 memo.id를 서버로 전송(데이터) -->
+                <td><button @click="deletememo(memo.id)">삭제</button></td>
+
             </tr>
         </table>
     </div>
@@ -40,6 +45,18 @@ export default {
             console.log(response.data);
             this.memo = response.data
         })
+    },
+    methods : {
+        deletememo(id) {
+            // axios를 통해 id값을 가진 memo를 삭제
+            this.$http.delete(`/api/memo/${id}`)
+            .then((response)=>{
+                // 값이 삭제된 메모배열을 다시 할당
+                // 서버로 요청해서 값이 삭제되었지만 
+                // 화면에 적용하기위해서 메모 배열을 들고옴
+                this.memo = response.data
+            })
+        }
     }
 }
 </script>
